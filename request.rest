@@ -1,0 +1,104 @@
+POST http://localhost:3001/login
+Content-Type: application/json
+
+{
+  "username": "username",
+  "password": "password"
+}
+###更新账户密码
+PUT http://localhost:3001/change-password
+Content-Type: application/json
+
+{
+  "username": "username",
+  "oldPassword": "password1",
+  "newPassword": "password"
+}
+###
+GET http://localhost:3001/check-session
+Content-Type: application/json
+
+###
+POST http://localhost:3001/logout
+Content-Type: application/json
+###
+POST http://localhost:3001/contact
+Content-Type: application/json
+
+{
+  "phoneNumber": "0451890125",
+  "alternativePhoneNumber": "0451890125",
+  "email": "rayrunzewang@gmail.com",
+  "address": "number street, suburb, state ,7215"
+}
+
+###
+GET http://localhost:3001/contact
+Content-Type: application/json
+
+###
+POST http://localhost:3001/posts
+Content-Type: application/json
+
+{
+  "title": "title-3",
+  "content": "StringStringStringStringStringStringStringStringStringStringStringStringStringStringStringStringStringStringStringStringStringStringStringStringStringStringStringStringStringString",
+  "author": "Author3"
+}
+### 获取全部Blog List
+GET http://localhost:3001/posts
+Content-Type: application/json
+
+###
+GET http://localhost:3001/posts/
+Content-Type: application/json
+
+###
+Delete http://localhost:3001/posts/
+Content-Type: application/json
+
+###
+PUT http://localhost:3001/posts/
+Content-Type: application/json
+
+{
+    "title": "title-1",
+    "content": "内容",
+    "author": "Author-1"
+}
+###
+GET http://localhost:3001/property/
+Content-Type: application/json
+###
+GET http://localhost:3001/property/64fef21ea3e0b823be8550b4
+Content-Type: application/json
+
+###
+PUT GET http://localhost:3001/property/650444314cf3933d8ffdff2b
+Content-Type: application/json
+
+{
+        "_id": "650444314cf3933d8ffdff2b",
+        "title": "1",
+        "address": "1",
+        "description": "1",
+        "bed": 1,
+        "toliet": 1,
+        "carspace": 1,
+        "images": [
+            {
+                "image_name": "1694778417251-994015371.jpg",
+                "image_url": "uploads\\1694778417251-994015371.jpg",
+                "order": 1,
+                "_id": "650444314cf3933d8ffdff2c"
+            },
+            {
+                "image_name": "1694778417263-5556153462.jpg",
+                "image_url": "uploads\\1694778417263-5556153462.jpg",
+                "order": 2,
+                "_id": "650444314cf3933d8ffdff2d"
+            }
+        ],
+        "__v": 0
+    },
+
