@@ -18,23 +18,23 @@ connectDB();
 app.use(cors(corsOptions));
 
 app.use(express.json());
-app.use(cookieParser());
+// app.use(cookieParser());
 
-app.use(session({
-  secret: sessionSecret,
-  rolling: true,
-  resave: false,
-  saveUninitialized: true,
-  cookie: {
-    maxAge: 24 * 60 * 60 * 1000,
-    httpOnly: true,
-    secure: false,
-    // sameSite: 'None',
-  },
-}));
+// app.use(session({
+//   secret: sessionSecret,
+//   rolling: true,
+//   resave: false,
+//   saveUninitialized: true,
+//   cookie: {
+//     maxAge: 24 * 60 * 60 * 1000,
+//     httpOnly: true,
+//     secure: false,
+//     // sameSite: 'None', 
+//   },
+// }));
 
-app.use(passport.initialize());
-app.use(passport.session());
+// app.use(passport.initialize());
+// app.use(passport.session());
 
 const authRoutes = require('./routes/authRoutes');
 const contactRoutes = require('./routes/contactRoutes');
@@ -55,7 +55,7 @@ app.use('/posts', blogPostRoutes);
 app.use('/check-session', sessionRoutes);
 app.use('/logout', sessionRoutes);
 app.use('/property', imagesRoutes);
-app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+// app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 app.use(bodyParser.json());
 app.use('/send-email', emailRoutes);
