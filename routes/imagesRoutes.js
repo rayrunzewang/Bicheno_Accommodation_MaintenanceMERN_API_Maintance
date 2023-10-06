@@ -141,9 +141,18 @@ router.get('/', async (req, res) => {
         carspace: property.carspace,
         link: property.link,
         coverImage_url: `data:${property.images[0].image_contentType};base64,${property.images[0].image_data.toString('base64')}`,
-        
+
       };
     });
+
+    // images: property.images.map((image) => {
+    //   return {
+    //     _id: property._id,
+    //     image_name: image.image_name,
+    //     image_url: `data:${image.image_contentType};base64,${image.image_data.toString('base64')}`,
+    //     order: image.order,
+    //   };
+    // }),
 
     // Send the property data and images to the frontend
     res.json({ properties: propertyData });
