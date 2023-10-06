@@ -140,13 +140,14 @@ router.get('/all-coverimage', async (req, res) => {
         toliet: property.toliet,
         carspace: property.carspace,
         link: property.link,
-        coverImage:
-        {
-          _id: property.images[0].property._id,
-          image_name: property.images[0].image_name,
-          image_url: `data:${property.images[0].image_contentType};base64,${property.images[0].image_data.toString('base64')}`,
-          order: property.images[0].order,
-        }
+        image_url: `data:${property.images[0].image_contentType};base64,${property.images[0].image_data.toString('base64')}`,
+
+        // {
+          // _id: property.images[0].property._id,
+          // image_name: property.images[0].image_name,
+          // image_url: `data:${property.images[0].image_contentType};base64,${property.images[0].image_data.toString('base64')}`,
+          // order: property.images[0].order,
+        // }
       };
 });
 
