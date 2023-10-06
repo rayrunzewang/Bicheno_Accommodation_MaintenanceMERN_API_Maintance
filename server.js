@@ -3,12 +3,12 @@ const corsOptions = require('./config/corsOptions');
 const connectDB = require('./config/dbConn');
 const mongoose = require('mongoose');
 const port = process.env.PORT || 3500;
-const sessionSecret = process.env.SESSION_SECRET;
+// const sessionSecret = process.env.SESSION_SECRET;
 const express = require('express');
 const cors = require('cors');
-const cookieParser = require('cookie-parser');
-const session = require('express-session');
-const passport = require('./config/passport-config')
+// const cookieParser = require('cookie-parser');
+// const session = require('express-session');
+// const passport = require('./config/passport-config')
 const app = express();
 const path = require('path');
 const bodyParser = require('body-parser');
@@ -57,7 +57,7 @@ app.use('/logout', sessionRoutes);
 app.use('/property', imagesRoutes);
 // app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
-app.use(bodyParser.json());
+// app.use(bodyParser.json());
 app.use('/send-email', emailRoutes);
 
 /* ------ deprecated: Method of generating PDF on the backend server using PDFkit and downloading. ------ */
