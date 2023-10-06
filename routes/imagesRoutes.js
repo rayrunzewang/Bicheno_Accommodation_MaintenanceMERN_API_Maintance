@@ -32,7 +32,7 @@ router.post('/', upload.array('file'), async (req, res) => {
     for (const file of uploadedFiles) {
       let fileSizeInBytes = file.size;
 
-      if (fileSizeInBytes < 200 * 1024) {
+      if (fileSizeInBytes < 150 * 1024) {
         newFile.images.push({
           image_name: file.originalname,
           image_data: file.buffer, // 存储图片的二进制数据

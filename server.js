@@ -1,5 +1,5 @@
 require('dotenv').config();
-const corsOptions = require('./config/corsOptions');  
+const corsOptions = require('./config/corsOptions');
 const connectDB = require('./config/dbConn');
 const mongoose = require('mongoose');
 const port = process.env.PORT || 3500;
@@ -14,14 +14,8 @@ const path = require('path');
 const bodyParser = require('body-parser');
 
 connectDB();
-// mongoose.connect('mongodb://127.0.0.1:27017/mern-todo', {
-//   useNewUrlParser: true,
-//   useUnifiedTopology: true
-// })
-//   .then(() => console.log('connected to DB'))
-//   .catch(console.error);
 
-  app.use(cors(corsOptions));
+app.use(cors(corsOptions));
 
 app.use(express.json());
 app.use(cookieParser());
