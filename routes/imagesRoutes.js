@@ -4,7 +4,7 @@ const multer = require('multer');
 const File = require('../models/File')
 const sharp = require('sharp');
 
-const storage = multer.memoryStorage(); 
+const storage = multer.memoryStorage();
 const upload = multer({ storage: storage });
 
 router.post('/', upload.array('file'), async (req, res) => {
@@ -119,7 +119,7 @@ router.get('/:id', async (req, res) => {
   }
 });
 
-router.get('/', async (req, res) => {
+router.get('/all-coverimage', async (req, res) => {
   try {
     // Retrieve all property data including images from MongoDB
     const properties = await File.find();
@@ -140,23 +140,22 @@ router.get('/', async (req, res) => {
         toliet: property.toliet,
         carspace: property.carspace,
         link: property.link,
-        images: property.images.map((image) => {
-          return {
-            _id: property._id,
-            image_name: image.image_name,
-            image_url: `data:${image.image_contentType};base64,${image.image_data.toString('base64')}`,
-            order: image.order,
-          };
-        }),
+        coverImage:
+        {
+          _id: property.images[0].property._id,
+          image_name: property.images[0].image_name,
+          image_url: `data:${property.images[0].image_contentType};base64,${property.images[0].image_data.toString('base64')}`,
+          order: property.images[0].order,
+        }
       };
-    });
+});
 
-    // Send the property data and images to the frontend
-    res.json({ properties: propertyData });
+// Send the property data and images to the frontend
+res.json({ properties: propertyData });
   } catch (error) {
-    console.error(error);
-    res.status(500).json({ message: 'Error fetching property data.' });
-  }
+  console.error(error);
+  res.status(500).json({ message: 'Error fetching property data.' });
+}
 });
 
 router.put('/:id', upload.array('file'), async (req, res) => {
