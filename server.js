@@ -36,10 +36,10 @@ app.use(express.json());
 // app.use(passport.initialize());
 // app.use(passport.session());
 
-const authRoutes = require('./routes/authRoutes');
+// const authRoutes = require('./routes/authRoutes');
 const contactRoutes = require('./routes/contactRoutes');
 const blogPostRoutes = require('./routes/blogPostRoutes');
-const sessionRoutes = require('./routes/sessionRoutes');
+// const sessionRoutes = require('./routes/sessionRoutes');
 const imagesRoutes = require('./routes/imagesRoutes');
 const emailRoutes = require('./routes/emailRoutes');
 
@@ -47,13 +47,13 @@ const emailRoutes = require('./routes/emailRoutes');
 
 // app.use(express.static(__dirname, 'uploads'));
 
-app.use('/register', authRoutes);
-app.use('/login', authRoutes);
-app.use('/change-password', authRoutes);
+// app.use('/register', authRoutes);
+// app.use('/login', authRoutes);
+// app.use('/change-password', authRoutes);
 app.use('/contact', contactRoutes);
 app.use('/posts', blogPostRoutes);
-app.use('/check-session', sessionRoutes);
-app.use('/logout', sessionRoutes);
+// app.use('/check-session', sessionRoutes);
+// app.use('/logout', sessionRoutes);
 app.use('/property', imagesRoutes);
 // app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
