@@ -190,7 +190,7 @@ router.get('/:id', async (req, res) => {
       bed,
       toliet,
       carspace,
-      booklink,
+      link,
       images,
     } = file;
 
