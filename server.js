@@ -55,6 +55,10 @@ app.use('/posts', blogPostRoutes);
 // app.use('/check-session', sessionRoutes);
 // app.use('/logout', sessionRoutes);
 app.use('/property', imagesRoutes);
+app.use('/property/propertycard', imagesRoutes);
+app.use('/property/alltitle', imagesRoutes);
+
+
 // app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 // app.use(bodyParser.json());

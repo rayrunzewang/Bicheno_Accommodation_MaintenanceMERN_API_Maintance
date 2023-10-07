@@ -35,8 +35,8 @@ router.post('/', upload.array('file'), async (req, res) => {
       if (fileSizeInBytes < 150 * 1024) {
         newFile.images.push({
           image_name: file.originalname,
-          image_data: file.buffer, // 存储图片的二进制数据
-          image_contentType: file.mimetype, // 图片的 MIME 类型
+          image_data: file.buffer, 
+          image_contentType: file.mimetype, 
           order: order,
           fileSizeInBytes: fileSizeInBytes,
         });
@@ -68,6 +68,110 @@ router.post('/', upload.array('file'), async (req, res) => {
   }
 });
 
+router.get('/', async (req, res) => {
+  try {
+    // Retrieve all property data including images from MongoDB
+    const properties = await File.find();
+
+    // If no properties are found, return an empty array or an appropriate response
+    if (!properties || properties.length === 0) {
+      return res.status(404).json({ message: 'No properties found.' });
+    }
+
+    // Extract property data and images to send to the frontend
+    const propertyData = properties.map((property) => {
+      return {
+        _id: property._id,
+        title: property.title,
+        address: property.address,
+        description: property.description,
+        bed: property.bed,
+        toliet: property.toliet,
+        carspace: property.carspace,
+        link: property.link,
+        images: property.images.map((image) => {
+          return {
+            _id: property._id,
+            image_name: image.image_name,
+            image_url: `data:${image.image_contentType};base64,${image.image_data.toString('base64')}`,
+            order: image.order,
+          };
+        }),
+      };
+    });
+
+
+
+    // Send the property data and images to the frontend
+    res.json({ properties: propertyData });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Error fetching property data.' });
+  }
+});
+
+router.get('/propertycard', async (req, res) => {
+  try {
+    const propertyData = await File.aggregate([
+      {
+        $project: {
+          _id: 1,
+          title: 1,
+          address: 1,
+          bed: 1,
+          toliet: 1,
+          carspace: 1,
+          image_contentType: { $arrayElemAt: ['$images.image_contentType', 0] }, // 获取第一个image
+          image_data: { $arrayElemAt: ['$images.image_data', 0] }, // 获取第一个image
+
+          // coverImage_url: {
+          //   $concat: [
+          //     'data:',
+          //     { $toString: '$image_contentType' },
+          //     ';base64,',
+          //     { $toString: '$image_data' } // 确保将image_data转换为字符串
+          //   ]
+          // }        
+        }
+      }
+    ]);
+
+    console.log(propertyData)
+
+    if (!propertyData || propertyData.length === 0) {
+      return res.status(404).json({ message: 'No properties found.' });
+    }
+
+    res.json({ properties: propertyData });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Error fetching property data.' });
+  }
+});
+
+router.get('/alltitle', async (req, res) => {
+  try {
+    const properties = await File.find().select('-images'); // 使用 '-images' 来排除 images 字段
+
+    if (!properties || properties.length === 0) {
+      return res.status(404).json({ message: 'No properties found.' });
+    }
+
+    const propertyData = properties.map((property) => {
+      return {
+        _id: property._id,
+        title: property.title,
+        
+      };
+    });
+
+    res.json({ properties: propertyData });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Error fetching property data.' });
+  }
+});
+
 router.get('/:id', async (req, res) => {
   try {
     const fileId = req.params.id;
@@ -86,7 +190,7 @@ router.get('/:id', async (req, res) => {
       bed,
       toliet,
       carspace,
-      link,
+      booklink,
       images,
     } = file;
 
@@ -116,49 +220,6 @@ router.get('/:id', async (req, res) => {
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: 'Failed to retrieve data.' });
-  }
-});
-
-router.get('/', async (req, res) => {
-  try {
-    // Retrieve all property data including images from MongoDB
-    const properties = await File.find();
-
-    // If no properties are found, return an empty array or an appropriate response
-    if (!properties || properties.length === 0) {
-      return res.status(404).json({ message: 'No properties found.' });
-    }
-
-    // Extract property data and images to send to the frontend
-    const propertyData = properties.map((property) => {
-      return {
-        _id: property._id,
-        title: property.title,
-        address: property.address,
-        description: property.description,
-        bed: property.bed,
-        toliet: property.toliet,
-        carspace: property.carspace,
-        link: property.link,
-        coverImage_url: `data:${property.images[0].image_contentType};base64,${property.images[0].image_data.toString('base64')}`,
-
-      };
-    });
-
-    // images: property.images.map((image) => {
-    //   return {
-    //     _id: property._id,
-    //     image_name: image.image_name,
-    //     image_url: `data:${image.image_contentType};base64,${image.image_data.toString('base64')}`,
-    //     order: image.order,
-    //   };
-    // }),
-
-    // Send the property data and images to the frontend
-    res.json({ properties: propertyData });
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ message: 'Error fetching property data.' });
   }
 });
 
