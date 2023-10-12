@@ -11,7 +11,7 @@ router.post('/', (req, res) => {
     const { name, mobile, email, message } = req.body;
     const mobileInfo = mobile ? mobile : 'Not provided';
     const msg = {
-        to: 'baysidetechstudio@gmail.com',
+        to: 'accommodation@bicheno.com.au',
         from: 'rayrunzewang@gmail.com',
         subject: '[No-Reply] - New Enquiry from Your Website',
         text: `
